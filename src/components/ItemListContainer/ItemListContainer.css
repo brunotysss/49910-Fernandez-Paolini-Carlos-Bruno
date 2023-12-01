@@ -1,0 +1,12 @@
+
+.list__container{
+    max-width: 1100px;
+    margin: 0 auto;
+    padding-block: 30px;
+
+} 
+
+.list__title{
+    font-size: 30px ;
+    font-weight: 700;
+} 
