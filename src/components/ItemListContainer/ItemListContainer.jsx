@@ -1,15 +1,40 @@
-import './ItemListContainer.css'
+import { useEffect, useState } from "react"
+import ItemList from "../ItemList/ItemList";
+import { pedirDatos } from "../../utils/utils";
+import { useParams } from "react-router-dom";
+import Spinner from "../Loader/Spinner";
+import Loader from "../Loader/Loader";
 
+const ItemListContainer = () => {
+  const [productos, setProductos] = useState([])
+  const [loading, setLoading] = useState(true)
 
+  const { categoryId } = useParams()
 
-const ItemListContainer = ({greeting}) => {
-    return (
-   <section className="list__container">
-     <h2 className="list__title">Productos</h2>
-    <p> {greeting}</p>
-   </section>
-)
+  useEffect(() => {
+      setLoading(true)
 
-}
+      pedirDatos() // <= Promise
+          .then((data) => {
+              const items = categoryId 
+                              ? data.filter(prod => prod.category === categoryId)
+                              : data
 
-export default ItemListContainer
+              setProductos(items)
+          })
+          .finally(() => setLoading( false ))
+  }, [categoryId])
+
+  return (
+        <>
+
+          {loading ? (
+            <Loader />
+          ) : (
+            <ItemList productos={productos} />
+          )}
+        </>
+  );
+};
+
+export default ItemListContainer;
