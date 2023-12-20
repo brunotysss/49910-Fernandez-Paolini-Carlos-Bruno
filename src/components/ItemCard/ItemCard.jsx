@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
-import Boton from "../../extra/Boton";
+import  Boton from "../../extra/Boton";
+
 
 const ItemCard = ({item}) => {
 
@@ -11,7 +12,7 @@ const ItemCard = ({item}) => {
       <p>{item.description}</p>
       <p className="text-xl font-bold">Precio: ${item.price}</p>
 
-      <Boton>
+      <Boton >
         <Link to={`/item/${item.id}`}>Ver más</Link>
       </Boton>
     </article>
