@@ -1,9 +1,13 @@
 
 import './Navbar.scss'
 import logo from '../../assets/veterinario.png'
-//import NavLink from './NavLink'
-
 import { Link, NavLink } from "react-router-dom";
+import CartWidget from "./CartWidget";
+import { useContext } from "react";
+import { UserContext } from "../../context/UserContext";
+import Boton from "../../extra/Boton";
+
+
 
 
 const links = [
@@ -35,31 +39,42 @@ const links = [
 
 
 const Navbar = () => {
-      return (
-        <header className="bg-green-600">
-            <div className="container m-auto py-6 flex justify-between items-center">
-              
-                <img className="header__logo" src={logo}  alt="logo" />
-                <h1 className="header__title">Veterinaria</h1>
-                <nav className="flex gap-4">
+  const { user, logout } = useContext(UserContext)
+
+  return (
+    <header className="bg-green-600">      
+    <div className="container m-auto py-6 flex justify-between items-center">
+   
+                
+        <img className="header__logo"  src={logo} alt="Logo" />
+        <h1 className="header__title">Veterinaria</h1>
+        <nav className="flex gap-4">
           {links.map((link) => (
 
             <NavLink
               key={link.href}
               to={link.href}
               className={({ isActive }) => (
-                `text-lg uppercase font-semibold ${isActive ? "text-green-400" : "text-white"}`
+                `text-lg uppercase font-semibold ${isActive ? "text-purple-400" : "text-white"}`
               )}
             >
               {link.label}
             </NavLink>
 
           ))}
+
+          <CartWidget />
         </nav>
-            </div>
-        </header>
- )
 
-}
+        {/* <CartWidget /> */}
+      </div>
 
-export default Navbar
+      {user.logged && <div className="flex gap-4 items-center container m-auto">
+        <p className="text-white">{user.email}</p>
+        <Boton onClick={logout}>Cerrar sesión</Boton>
+      </div>}
+    </header>
+  );
+};
+
+export default Navbar;
